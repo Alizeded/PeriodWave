@@ -50,7 +50,7 @@ Second, Accelerate the PeriodWave with adversarial flow matching optimzation.
 ![image](https://github.com/user-attachments/assets/06a8d005-ca07-43b6-b947-c79d55d2819c)
 
 ## Todo
-### PeriodWave
+### PeriodWave (Mel-spectrogram)
 - [ ] PeriodWave (Trained with LJSpeech, 22.05 kHz, 80 bins)
 - [ ] PeriodWave (Trained with LibriTTS-train-960, 24 kHz, 100 bins)
 - [ ] Training Code
@@ -60,13 +60,19 @@ Second, Accelerate the PeriodWave with adversarial flow matching optimzation.
 - [ ] PeriodWave-Small (Trained with LibriTTS-train-960, 24 kHz, 100 bins)
 - [ ] PeriodWave-Large (Trained with LibriTTS-train-960, 24 kHz, 100 bins)
       
-### PeriodWave-Turbo 
+### PeriodWave-Turbo (Mel-spectrogram)
 - [x] Paper (PeriodWave-Turbo paper was released, https://arxiv.org/abs/2408.08019.)
 - [ ] PeriodWave-Turbo (4 Steps ODE, Euler Method)
 - [ ] PeriodWave-Turbo-Small (4 Steps ODE, Euler Method)
 - [ ] PeriodWave-Turbo-Large (4 Steps ODE, Euler Method)
-
+      
 We have compared several methods including different reconstuction losses, distillation methods, and GANs for PeriodWave-Turbo. Finetuning the PeriodWave models with fixed steps could significantly improve the performance! The PeriodWave-Turbo utilized the Multi-scale Mel-spectrogram loss and Adversarial Training (MPD, CQT-D) following BigVGAN-v2. We highly appreciate the authors of BigVGAN for their dedication to the open-source implementation. Thanks to their efforts, we were able to quickly experiment and reduce trial and error.
+
+### PeriodWave-Turbo (EnCodec)  
+- [ ] PeriodWave-Turbo (2 Steps ODE, Euler Method)
+- [ ] PeriodWave-Turbo (4 Steps ODE, Euler Method)
+
+We will update the PeriodWave-Turbo Paper soon, and release the PeriodWave-Turbo that generate waveform from EnCodec Tokens. While we trained this model with EnCodec Tokens of Q=8, we found that our model has shown robust and powerful performance on any bitrates of 1.5 (Q=2), 3 (Q=4), 6 (Q=8), 12 (Q=16), and 24 (Q=32).
 
 ## TTS with PeriodWave
 - [ ] PeriodWave with TTS (24 kHz, 100 bins)
