@@ -72,7 +72,7 @@ We have compared several methods including different reconstuction losses, disti
 - [ ] PeriodWave-Turbo (2 Steps ODE, Euler Method)
 - [ ] PeriodWave-Turbo (4 Steps ODE, Euler Method)
 
-We will update the PeriodWave-Turbo Paper soon, and release the PeriodWave-Turbo that generate waveform from EnCodec Tokens. While we trained this model with EnCodec Tokens of Q=8, we found that our model has shown robust and powerful performance on any bitrates of 1.5 (Q=2), 3 (Q=4), 6 (Q=8), 12 (Q=16), and 24 (Q=32).
+We will update the PeriodWave-Turbo Paper soon, and release the PeriodWave-Turbo models that generate waveform from EnCodec Tokens. While we trained these models with EnCodec Tokens of Q=8, we found that our model has shown robust and powerful performance on any bitrates of 1.5 (Q=2), 3 (Q=4), 6 (Q=8), 12 (Q=16), and 24 (Q=32).
 
 ## TTS with PeriodWave
 - [ ] PeriodWave with TTS (24 kHz, 100 bins)
