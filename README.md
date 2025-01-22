@@ -38,6 +38,8 @@ This repository contains:
 - We have released PeriodWave-Turbo (4 Steps Models).
 - We have released PeriodWave.
 -->
+### 25.01.22 
+- PeriodWave has been accepted to ICLR 2025.
 ### 24.08.16
 In this repositoy, we provide a new paradigm and architecture of Neural Vocoder that enables notably fast training and achieves SOTA performance. With 10 times fewer training times, we acheived State-of-The-Art Performance on LJSpeech and LibriTTS.
 
