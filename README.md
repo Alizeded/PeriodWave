@@ -36,9 +36,7 @@ First, Train the PeriodWave with conditional flow matching.
 
 Second, Accelerate the PeriodWave with adversarial flow matching optimzation. 
 - [PeriodWave-Turbo](https://arxiv.org/abs/2408.08019): SOTA Few-step Generator tuned from PeriodWave
-
-![image](https://github.com/user-attachments/assets/06a8d005-ca07-43b6-b947-c79d55d2819c)
-
+  
 ## Todo
 ### PeriodWave (Mel-spectrogram)
 - [x] PeriodWave (Trained with LJSpeech, 22.05 kHz, 80 bins)
