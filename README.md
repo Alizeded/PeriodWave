@@ -75,8 +75,9 @@ pip install -r requirements.txt
 ```
 ### Prepare Dataset
 2. Prepare your own Dataset (We utilized LibriTTS dataset without any preprocessing)
-3. Extract Energy Min/Max #(Mel version) skip this for EnCodec version
+3. Extract Energy Min/Max 
 ```
+#(Mel version) skip this for EnCodec version
 python filelist_gen.py # val list (dev-clean and dev-other) of BigVGAN
 python extract_energy.py # You can use the extracted stats (stats_libritts_24000hz, stats_lj_22050hz)
 ```
