@@ -9,15 +9,9 @@
 
 <sup>1</sup> Department of Software and Computer Engineering, Ajou University, Suwon, Korea<br>
 <sup>2</sup> Department of Artificial Intelligence, Ajou University, Suwon, Korea<br>
-<sup>3</sup> AI Tech Lab, KT Corp., Seoul, Korea  <br>
+<sup>3</sup> Gen AI Lab, KT Corp., Seoul, Korea  <br>
 <sup>4</sup> Department of Artificial Intelligence, Korea University, Seoul, Korea  <br>
 
-<!--
-## Seeking Research Funding Support
-I am seeking research funding support for my upcoming project. If you are interested in providing funding or would like more information about the project, please contact me (sanghoonlee@ajou.ac.kr). Thank you for your consideration and support. 
-
-음성 합성 기술, 음성 변환 기술, 실시간 음성 생성 기술 개발 등 다양한 연구를 현재 진행 및 계획 중입니다. 산학협력연구에 관심 있으면 연락 부탁드립니다. (sanghoonlee@ajou.ac.kr)
--->
 
 This repository contains:
 
@@ -27,17 +21,10 @@ This repository contains:
 - 🛸 A PeriodWave training script
 
 ## Update
-<!--- 💥 TTS/VC with PeriodWave 
 
-### 24.00.00
-- PeriodWave-Turbo Paper Update
-### 24.00.00
-- We have released PeriodWave-L and PeriodWave-Turbo-L (4 Steps Models). We achieved PESQ of 4.454
+### 25.02.10
+- We have released the source code and checkpoints of PeriodWave.
 
-### 24.08.00
-- We have released PeriodWave-Turbo (4 Steps Models).
-- We have released PeriodWave.
--->
 ### 25.01.22 
 - PeriodWave has been accepted to ICLR 2025.
 ### 24.08.16
@@ -53,26 +40,24 @@ Second, Accelerate the PeriodWave with adversarial flow matching optimzation.
 
 ## Todo
 ### PeriodWave (Mel-spectrogram)
-- [ ] PeriodWave (Trained with LJSpeech, 22.05 kHz, 80 bins)
-- [ ] PeriodWave (Trained with LibriTTS-train-960, 24 kHz, 100 bins)
-- [ ] Training Code
-- [ ] Inference
-- [ ] PeriodWave with FreeU (Only Inference)
-- [ ] Evaluation (M-STFT, PESQ, Periodicity, V/UV F1, Pitch, UTMOS)
-- [ ] PeriodWave-Small (Trained with LibriTTS-train-960, 24 kHz, 100 bins)
-- [ ] PeriodWave-Large (Trained with LibriTTS-train-960, 24 kHz, 100 bins)
-      
+- [x] PeriodWave (Trained with LJSpeech, 22.05 kHz, 80 bins)
+- [x] PeriodWave (Trained with LibriTTS-train-960, 24 kHz, 100 bins)
+- [x] Training Code
+- [x] Inference
+- [x] PeriodWave with FreeU (Only Inference)
+- [x] Evaluation (M-STFT, PESQ, Periodicity, V/UV F1, Pitch, UTMOS)
+
 ### PeriodWave-Turbo (Mel-spectrogram)
 - [x] Paper (PeriodWave-Turbo paper was released, https://arxiv.org/abs/2408.08019.)
-- [ ] PeriodWave-Turbo (4 Steps ODE, Euler Method)
-- [ ] PeriodWave-Turbo-Small (4 Steps ODE, Euler Method)
-- [ ] PeriodWave-Turbo-Large (4 Steps ODE, Euler Method)
-      
+- [x] PeriodWave-Turbo (4 Steps ODE, Euler Method)
+- [ ] Huggingface
+
 We have compared several methods including different reconstuction losses, distillation methods, and GANs for PeriodWave-Turbo. Finetuning the PeriodWave models with fixed steps could significantly improve the performance! The PeriodWave-Turbo utilized the Multi-scale Mel-spectrogram loss and Adversarial Training (MPD, CQT-D) following BigVGAN-v2. We highly appreciate the authors of BigVGAN for their dedication to the open-source implementation. Thanks to their efforts, we were able to quickly experiment and reduce trial and error.
 
 ### PeriodWave-Turbo (EnCodec 24 kHz)  
-- [ ] PeriodWave-Turbo (2 Steps ODE, Euler Method)
-- [ ] PeriodWave-Turbo (4 Steps ODE, Euler Method)
+- [x] PeriodWave-Turbo (2 Steps ODE, Euler Method)
+- [x] PeriodWave-Turbo (4 Steps ODE, Euler Method)
+- [ ] Huggingface
 
 We will update the PeriodWave-Turbo Paper soon, and release the PeriodWave-Turbo models that generate waveform from EnCodec Tokens. While we trained these models with EnCodec Tokens of Q=8, we found that our model has shown robust and powerful performance on any bitrates of 1.5 (Q=2), 3 (Q=4), 6 (Q=8), 12 (Q=16), and 24 (Q=32).
 
@@ -80,11 +65,6 @@ We will update the PeriodWave-Turbo Paper soon, and release the PeriodWave-Turbo
 - [ ] PeriodWave with TTS (24 kHz, 100 bins)
       
 The era of Mel-spectrograms is returning with advancements in models like P-Flow, VoiceBox, E2-TTS, DiTTo-TTS, ARDiT-TTS, and MELLE. PeriodWave can enhance the audio quality of your TTS models, eliminating the need to rely on codec models. Mel-spectrogram with powerful generative models has the potential to surpass neural codec language models in performance.
-
-<!--
-## VC with PeriodWave
-- [ ] PeriodWave with [SDT (Speech Diffusion Transformer]() (24 kHz, 80 bins, hop 240)
--->
       
 ## Getting Started
 
@@ -96,48 +76,71 @@ pip install -r requirements.txt
 ```
 ### Prepare Dataset
 2. Prepare your own Dataset (We utilized LibriTTS dataset without any preprocessing)
-3. Extract Energy Min/Max
+3. Extract Energy Min/Max #(Mel version) skip this for EnCodec version
 ```
-python extract_energy.py
+python filelist_gen.py # val list (dev-clean and dev-other) of BigVGAN
+python extract_energy.py # You can use the extracted stats (stats_libritts_24000hz, stats_lj_22050hz)
 ```
 4. Change energy_max, energy_min in Config.json
-   
+
 ### Train PeriodWave
 ```
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train_periodwave.py -c configs/periodwave.json -m periodwave
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train_periodwave.py -c configs/periodwave_24000hz.json -m periodwave_test
 ```
 
 ### Train PeriodWave-Turbo
 - Finetuning the PeriodWave with fixed steps can improve the entire performance and accelerate the inference speed (NFE 32 --> 2 or 4)
 ```
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train_periodwave_turbo.py -c configs/periodwave_turbo.json -m periodwave_turbo
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train_periodwave_turbo.py -c configs/periodwave_turbo_24000hz.json -m periodwave_turbo
 ```
+
+### Checkpoint
+
+[Checkpoint](https://drive.google.com/drive/folders/1uUlfiSHFL9xNAZKp6-a584cW9nG7wDK7?usp=drive_link) 
+
+- periodwave_lj_22050hz: Mel-spectrogram (80 bins)
+- periodwave_lj_turbo_4: Mel-spectrogram (80 bins), 4 steps Euler 
+- periodwave_libritts_24000hz: Mel-spectrogram (100 bins)
+- periodwave_turbo_base: Mel-spectrogram (100 bins), 4 steps Euler 
+- periodwave_turbo_large: Mel-spectrogram (100 bins), 4 steps Euler, Large Model (use inference_large.py)
+- periodwave_encodec: EnCodec (24 khz), trained with libritts
+- periodwave_encodec_turbo: EnCodec (24 khz), trained with libritts
+- periodwave_encodec_turbo_universe_cont_step2: EnCodec (24 khz), trained with universal audio dataset, 2 steps Euler 
+- periodwave_encodec_turbo_universe_mel45_from_speechonly470k: EnCodec (24 khz), trained with universal audio dataset, 4 steps Euler
 
 ### Inference PeriodWave (24 kHz)
 ```
+
 # PeriodWave
-CUDA_VISIBLE_DEVICES=0 python inference.py --ckpt "logs/periodwave_base_libritts/G_1000000.pth" --iter 16 --noise_scale 0.667 --solver 'midpoint'
+CUDA_VISIBLE_DEVICES=0 python inference.py --ckpt "logs/periodwave_libritts_24000hz/G_1000000.pth" --iter 16 --noise_scale 0.667 --solver 'midpoint'
 
 # PeriodWave with FreeU (--s_w 0.9 --b_w 1.1)
 # Decreasing skip features could reduce the high-frequency noise of generated samples
 # We only recommend using FreeU with PeriodWave. Note that PeriodWave-Turbe with FreeU has different aspects so we do not use FreeU with PeriodWave-Turbo. 
-CUDA_VISIBLE_DEVICES=0 python inference_with_FreeU.py --ckpt "logs/periodwave_libritts/G_1000000.pth" --iter 16 --noise_scale 0.667 --solver 'midpoint' --s_w 0.9 --b_w 1.1
+CUDA_VISIBLE_DEVICES=0 python inference_with_FreeU.py --ckpt "logs/periodwave_libritts_24000hz/G_1000000.pth" --iter 16 --noise_scale 0.667 --solver 'midpoint' --s_w 0.9 --b_w 1.1
 
 # PeriodWave-Turbo-4steps (Highly Recommended)
-CUDA_VISIBLE_DEVICES=0 python inference.py --ckpt "logs/periodwave_turbo_base_step4_libritts_24000hz/G_274000.pth" --iter 4 --noise_scale 1 --solver 'euler'
+CUDA_VISIBLE_DEVICES=0 python inference.py --ckpt "logs/periodwave_turbo_base/G_274000.pth" --iter 4 --noise_scale 1 --solver 'euler'
+
+# PeriodWave-Turbo-L-4steps # We added additional layers for final and Mel-cond block
+CUDA_VISIBLE_DEVICES=0 python inference_large.py --ckpt "logs/periodwave_turbo_large/G_379000.pth" --iter 4 --noise_scale 1 --solver 'euler'
+
+# PeriodWave-EnCodec-4steps (Highly Recommended)
+# Download the universal audio test datasets of rfwave (https://drive.google.com/file/d/1WjRRfD1yJSjEA3xfC8-635ugpLvnRK0f/view)
+# periodwave_encodec_turbo_universe_mel45_from_speechonly470k model is fine-tuned from periodwave_encodec_turbo (LibriTTS only) which is fine-tuned from periodwav_encodec for efficient continual learning.
+
+CUDA_VISIBLE_DEVICES=0 python inference_periodwave_encodec_universal_test_speech.py --ckpt "logs/periodwave_encodec_turbo_universe_mel45_from_speechonly470k/G_590000.pth" --iter 4 --noise_scale 1 --solver 'euler'
+CUDA_VISIBLE_DEVICES=0 python inference_periodwave_encodec_universal_test_vocal.py --ckpt "logs/periodwave_encodec_turbo_universe_mel45_from_speechonly470k/G_590000.pth" --iter 4 --noise_scale 1 --solver 'euler'
+CUDA_VISIBLE_DEVICES=0 python inference_periodwave_encodec_universal_test_sound.py --ckpt "logs/periodwave_encodec_turbo_universe_mel45_from_speechonly470k/G_590000.pth" --iter 4 --noise_scale 1 --solver 'euler'
+
+# PeriodWave-EnCodec-2steps
+CUDA_VISIBLE_DEVICES=0 python inference_periodwave_encodec_universal_test_speech.py --ckpt "logs/periodwave_encodec_turbo_universe_cont_step2/G_400000.pth" --iter 2 --noise_scale 1 --solver 'euler'
 ```
 
-<!--
-## Modification after paper submission
-### 6 kHz Band Noise Issue
-- We found that the generated samples contain 6 kHz band noise. (Unfortunately, I could not hear this sound... but someone told me this issue. I checked it by visualization of spectrogram)
-- We experimented over 50 modified models after submission... (Activation, Low-pass filter, add/concat, activation position, down/up-sampling position, etc.)
-- We observed that the main reason is the down/up-sampling position of our Unet structure. We modified the model that can use the skip-connection for the features of original resolution to feed it to the decoder.
-- Also, the concatnation of skip-features could remove the band noise, however, this decreases the performance while the noise band is removed. (This means that the stacked noise over ODE steps make the samples with 6 kHz band noise.
-- We all re-train the model, and improve the performance compared to the submision version.
--->
+### If you do not want to use energy-based prior, please reduce the noise scale to 0.25
 
 ## Reference
+Thanks for all great works
 ### Flow Matching for high-quality and efficient generative model
 - FM: https://openreview.net/forum?id=PqvMRDCJT9t
 - VoiceBox (Mel-spectrogram Generation): https://openreview.net/forum?id=gzCS252hCO&noteId=e2GZZfeO9g

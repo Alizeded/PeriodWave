@@ -1,0 +1,54 @@
+{
+  "train": {
+    "log_interval": 200,
+    "eval_interval": 1000,
+    "save_interval": 1000,
+    "seed": 1234,
+    "epochs": 20000,
+    "learning_rate": 2e-5,
+    "batch_size": 8,
+    "fp16_run": false,
+    "segment_size": 32768,
+    "tuning_steps": 4,
+    "finetuning_temperature": 1,
+    "w_stft":45,
+    "hps.train.pretrain_path": "./logs/periodwave_lj_22050hz/G_1000000.pth"
+  },
+
+  "data": {
+    "train_filelist_path": "filelist_lj/train_wav.txt",
+    "test_filelist_path": "filelist_lj/val_wav.txt",
+    "max_wav_value": 32768.0,
+    "sampling_rate": 22050,
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024,
+    "n_mel_channels": 80,
+    "mel_fmin": 0,
+    "mel_fmax": 8000,
+    "energy_max": "stats_lj_22050hz/energy_max_train.npy",
+    "energy_min": "stats_lj_22050hz/energy_min_train.npy"
+  },
+
+  "model": {
+    "periods": [1,2,3,5,7],
+    "noise_scale": 0.25,
+    "final_dim": 32,
+    "hidden_dim":512
+  },
+
+  "discriminator": {
+      "cqtd_filters": 128,
+      "cqtd_max_filters": 1024,
+      "cqtd_filters_scale": 1,
+      "cqtd_dilations": [1, 2, 4],
+      "cqtd_hop_lengths": [512, 256, 256],
+      "cqtd_n_octaves": [9, 9, 9],
+      "cqtd_bins_per_octaves": [24, 36, 48],
+      "sampling_rate":22050,
+      "mpd_reshapes": [2, 3, 5, 7, 11],
+      "use_spectral_norm": false,
+      "discriminator_channel_mult": 1
+  }
+}
+  
