@@ -18,6 +18,7 @@ This repository contains:
 - 🪐 A PyTorch implementation of PeriodWave and PeriodWave-Turbo 
 - ⚡️ Pre-trained PeriodWave models trained on LibriTTS (24,000 Hz, 100 bins, hop size of 256)
 - 💥 Pre-trained PeriodWave models trained on LJSpeech (22,050 Hz, 80 bins, hop size of 256)
+- ✨ Pre-trained PeriodWave-Encodec models trained on Universal Audio Dataset (24,000 Hz, EnCodec)
 - 🛸 A PeriodWave training script
 
 ## Update
