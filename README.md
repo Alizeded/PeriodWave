@@ -136,6 +136,64 @@ CUDA_VISIBLE_DEVICES=0 python inference_periodwave_encodec_universal_test_sound.
 # PeriodWave-EnCodec-2steps
 CUDA_VISIBLE_DEVICES=0 python inference_periodwave_encodec_universal_test_speech.py --ckpt "logs/periodwave_encodec_turbo_universe_cont_step2/G_400000.pth" --iter 2 --noise_scale 1 --solver 'euler'
 ```
+### Test (We will update this using huggingface or torch.hub)
+```
+import os
+import torch
+from torch.nn import functional as F
+from scipy.io.wavfile import write
+import utils
+from meldataset_prior_length import  load_wav, MAX_WAV_VALUE
+from librosa.util import normalize
+from model.periodwave_encodec_freeu import FlowMatch
+from encodec_feature_extractor import EncodecFeatures
+
+ckpt = 'logs/periodwave_encodec_turbo_universe_mel45_from_speechonly470k/G_590000.pth'
+hps = utils.get_hparams_from_file(os.path.join(os.path.split(ckpt)[0], 'config.json'))
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+model = FlowMatch(hps.data.n_mel_channels,
+                    hps.model.periods,
+                    hps.model.noise_scale,
+                    hps.model.final_dim,
+                    hps.model.hidden_dim,).cuda()
+_ = model.eval()
+_ = utils.load_checkpoint(ckpt, model, None)
+model.estimator.remove_weight_norm()
+
+Encodec = EncodecFeatures(bandwidth=6.0).cuda() 
+# 6.0 (Default, we trained the model with the feature of 6.0) 
+# 1.5, 3.0, 6.0, 12.0
+# 12.0 (Not used during training but our model can generate higher quality audio with 12.0)
+
+
+source_path = "test/Triviul_feat._The_Fiend_-_Widow.stem.vocals_part180.wav"
+audio, _ = load_wav(source_path, hps.data.sampling_rate)
+audio = audio / MAX_WAV_VALUE
+audio = normalize(audio) * 0.95
+
+audio = torch.FloatTensor(audio)
+audio = audio.unsqueeze(0)
+
+audio = F.pad(audio, (0, ((audio.size(1) // 3840)+1)*3840 - audio.size(1)), 'constant')
+
+file_name = os.path.splitext(os.path.basename(source_path))[0]
+audio = audio.cuda()
+
+with torch.no_grad():
+    embs = Encodec(audio)
+    resynthesis_audio = model(audio, embs, n_timesteps=4)
+
+    if torch.abs(resynthesis_audio).max() >= 0.95:
+        resynthesis_audio = (resynthesis_audio / (torch.abs(resynthesis_audio).max())) * 0.95
+
+    resynthesis_audio = resynthesis_audio.squeeze()[:audio.shape[-1]]
+    resynthesis_audio = resynthesis_audio * MAX_WAV_VALUE
+    resynthesis_audio = resynthesis_audio.cpu().numpy().astype('int16')
+
+    write("recon.wav", 24000, resynthesis_audio)
+```
+
 
 ### If you do not want to use energy-based prior, please reduce the noise scale to 0.25
 
