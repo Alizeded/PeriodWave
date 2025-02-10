@@ -1,8 +1,8 @@
 {
   "train": {
     "log_interval": 200,
-    "eval_interval": 1000,
-    "save_interval": 1000,
+    "eval_interval": 10000,
+    "save_interval": 10000,
     "seed": 1234,
     "epochs": 20000,
     "learning_rate": 2e-5,
@@ -12,7 +12,7 @@
     "tuning_steps": 4,
     "finetuning_temperature": 1,
     "w_stft":45,
-    "hps.train.pretrain_path": "./logs/periodwave_lj_22050hz/G_1000000.pth"
+    "pretrain_path": "./logs/periodwave_lj_22050hz/G_1000000.pth"
   },
 
   "data": {

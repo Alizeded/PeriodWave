@@ -1,7 +1,7 @@
 {
   "train": {
     "log_interval": 200,
-    "eval_interval": 10000,
+    "eval_interval": 50000,
     "save_interval": 10000,
     "seed": 1234,
     "epochs": 20000,
@@ -10,6 +10,7 @@
     "fp16_run": false,
     "segment_size": 32768
   },
+
   "data": {
     "train_filelist_path": "filelists_24k/train_wav.txt",
     "test_filelist_path": "filelists_24k/val_wav.txt",
@@ -24,6 +25,7 @@
     "energy_max": "stats_libritts_24000hz/energy_max_train.npy",
     "energy_min": "stats_libritts_24000hz/energy_min_train.npy"
   },
+
   "model": {
     "periods": [1,2,3,5,7],
     "noise_scale": 0.5,
