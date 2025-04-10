@@ -98,7 +98,7 @@ for i in tqdm(range(len(audio_files))):
     audio = audio.unsqueeze(0)
     # match audio length to self.hop_size * n for evaluation
     if (audio.size(1) % 256) != 0:
-        audio = audio[:, :-(audio.size(1) % 240)]
+        audio = audio[:, :-(audio.size(1) % 256)]
 
     mel = mel_spectrogram(audio, 1024, 100,
                             24000, 256, 1024, 0, 12000,
