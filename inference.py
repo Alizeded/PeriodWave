@@ -34,8 +34,8 @@ def inference(a):
 
     model.estimator.remove_weight_norm()
 
-    energy_max = float(np.load(h.data.energy_max, allow_pickle=True))
-    energy_min = float(np.load(h.data.energy_min, allow_pickle=True))
+    energy_max = float(np.load(hps.data.energy_max, allow_pickle=True))
+    energy_min = float(np.load(hps.data.energy_min, allow_pickle=True))
     std_min = 0.1
 
 
