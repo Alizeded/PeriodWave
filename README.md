@@ -60,8 +60,8 @@ We have compared several methods including different reconstuction losses, disti
 
 We will update the PeriodWave-Turbo Paper soon, and release the PeriodWave-Turbo models that generate waveform from EnCodec Tokens. While we trained these models with EnCodec Tokens of Q=8, we found that our model has shown robust and powerful performance on any bitrates of 1.5 (Q=2), 3 (Q=4), 6 (Q=8), 12 (Q=16), and 24 (Q=32).
 
-## TTS with PeriodWave
-- [ ] PeriodWave with TTS (24 kHz, 100 bins)
+## TTS with PeriodWave 
+- [ ] PeriodWave for F5-TTS (24 kHz, 100 bins)
       
 The era of Mel-spectrograms is returning with advancements in models like P-Flow, VoiceBox, E2-TTS, DiTTo-TTS, ARDiT-TTS, and MELLE. PeriodWave can enhance the audio quality of your TTS models, eliminating the need to rely on codec models. Mel-spectrogram with powerful generative models has the potential to surpass neural codec language models in performance.
       
