@@ -66,6 +66,7 @@ We will update the PeriodWave-Turbo Paper soon, and release the PeriodWave-Turbo
       
 The era of Mel-spectrograms is returning with advancements in models like P-Flow, VoiceBox, E2-TTS, DiTTo-TTS, ARDiT-TTS, and MELLE. PeriodWave can enhance the audio quality of your TTS models, eliminating the need to rely on codec models. Mel-spectrogram with powerful generative models has the potential to surpass neural codec language models in performance.
 
+### 2025.04.14
 Currently, we are training PeriodWave using the Mel-spectrogram from F5-TTS. By using PeriodWave instead of Vocos, we can achieve a much higher quality waveform. Please wait just a little longer, as we will release the model after fine-tuning with adversarial training in May.
 
 ## Getting Started
