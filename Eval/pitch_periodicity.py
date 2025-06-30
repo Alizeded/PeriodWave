@@ -2,6 +2,7 @@ import torchcrepe
 import torch
 import functools
 
+
 def from_audio(audio, target_length, hopsize):
     """Preprocess pitch from audio"""
 
@@ -15,31 +16,31 @@ def from_audio(audio, target_length, hopsize):
         hop_length=hopsize,
         fmin=50,
         fmax=550,
-        model='full',
+        model="full",
         return_periodicity=True,
         batch_size=1024,
         device=audio.device,
-        pad=False)
+        pad=False,
+    )
 
     # Set low energy frames to unvoiced
     periodicity = torchcrepe.threshold.Silence()(
-        periodicity,
-        audio,
-        torchcrepe.SAMPLE_RATE,
-        hop_length=hopsize,
-        pad=False)
+        periodicity, audio, torchcrepe.SAMPLE_RATE, hop_length=hopsize, pad=False
+    )
 
     # Potentially resize due to resampled integer hopsize
     if pitch.shape[1] != target_length:
         interp_fn = functools.partial(
             torch.nn.functional.interpolate,
             size=target_length,
-            mode='linear',
-            align_corners=False)
+            mode="linear",
+            align_corners=False,
+        )
         pitch = 2 ** interp_fn(torch.log2(pitch)[None]).squeeze(0)
         periodicity = interp_fn(periodicity[None]).squeeze(0)
 
     return pitch, periodicity
+
 
 def p_p_F(threshold, true_pitch, true_periodicity, pred_pitch, pred_periodicity):
     true_threshold = threshold(true_pitch, true_periodicity)
@@ -55,8 +56,9 @@ def p_p_F(threshold, true_pitch, true_periodicity, pred_pitch, pred_periodicity)
     voiced = true_voiced & pred_voiced
     voiced_sum = voiced.sum()
 
-    difference_cents = 1200 * (torch.log2(true_pitch[voiced]) -
-                               torch.log2(pred_pitch[voiced]))
+    difference_cents = 1200 * (
+        torch.log2(true_pitch[voiced]) - torch.log2(pred_pitch[voiced])
+    )
     pitch_total = difference_cents.pow(2).sum()
 
     # Update voiced/unvoiced precision and recall
@@ -70,4 +72,8 @@ def p_p_F(threshold, true_pitch, true_periodicity, pred_pitch, pred_periodicity)
     recall = true_positives / (true_positives + false_negatives)
     f1 = 2 * precision * recall / (precision + recall)
 
-    return pitch_rmse.nan_to_num().item(), periodicity_rmse.item(), f1.nan_to_num().item()
+    return (
+        pitch_rmse.nan_to_num().item(),
+        periodicity_rmse.item(),
+        f1.nan_to_num().item(),
+    )

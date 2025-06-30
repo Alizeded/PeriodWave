@@ -27,3 +27,10 @@ dependencies = [
 where   = ["."]
 include = ["*"]
 exclude = ["tests*", "examples*"]
+
+[tool.setuptools]
+py-modules = [
+  "encodec_feature_extractor",
+  "extract_energy",
+  "meldataset_prior_length",
+]
