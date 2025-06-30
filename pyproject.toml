@@ -15,9 +15,10 @@ dependencies = [
   "torchaudio",
   "numpy",
   "scipy",
-  "librosa>=0.10",
+  "librosa",
   "soundfile",
   "tqdm",
+  "numba==0.61.2",
   "einops",
 ]
 
