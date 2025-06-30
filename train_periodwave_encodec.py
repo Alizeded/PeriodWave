@@ -13,14 +13,14 @@ from torch.utils.tensorboard import SummaryWriter
 import torchaudio
 import random
 import commons
-import utils
+import periodwave.inference_utils.utils as utils
 from dataset_codec import MelDataset, mel_spectrogram, MAX_WAV_VALUE
 from torch.utils.data.distributed import DistributedSampler
 import auraloss
 from pesq import pesq
 
 from periodwave.periodwave_encodec import FlowMatch
-from encodec_feature_extractor import EncodecFeatures
+from periodwave.inference_utils.encodec_feature_extractor import EncodecFeatures
 
 torch.backends.cudnn.benchmark = True
 global_step = 0

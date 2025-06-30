@@ -13,8 +13,12 @@ from torch.utils.tensorboard import SummaryWriter
 import torchaudio
 import random
 import commons
-import utils
-from meldataset_prior_length import MelDataset, mel_spectrogram, MAX_WAV_VALUE
+import periodwave.inference_utils.utils as utils
+from periodwave.inference_utils.meldataset_prior_length import (
+    MelDataset,
+    mel_spectrogram,
+    MAX_WAV_VALUE,
+)
 from torch.utils.data.distributed import DistributedSampler
 import auraloss
 from pesq import pesq

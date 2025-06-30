@@ -4,8 +4,8 @@ import argparse
 import tqdm
 import numpy as np
 from scipy.io.wavfile import write
-import utils
-from meldataset_prior_length import (
+import periodwave.inference_utils.utils as utils
+from periodwave.inference_utils.meldataset_prior_length import (
     mel_spectrogram,
     load_wav,
     MAX_WAV_VALUE,

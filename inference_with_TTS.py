@@ -6,8 +6,8 @@ import tqdm
 import numpy as np
 from scipy.io.wavfile import write
 import torchaudio
-import utils
-from meldataset_prior_length import MAX_WAV_VALUE
+import periodwave.inference_utils.utils as utils
+from periodwave.inference_utils.meldataset_prior_length import MAX_WAV_VALUE
 
 
 from periodwave.periodwave import FlowMatch

@@ -7,15 +7,19 @@ import numpy as np
 from torch.nn import functional as F
 from scipy.io.wavfile import write
 import torchaudio
-import utils
-from meldataset_prior_length import mel_spectrogram, load_wav, MAX_WAV_VALUE
+import periodwave.inference_utils.utils as utils
+from periodwave.inference_utils.meldataset_prior_length import (
+    mel_spectrogram,
+    load_wav,
+    MAX_WAV_VALUE,
+)
 from librosa.util import normalize
 
 import auraloss
 from pesq import pesq
 
 from periodwave.periodwave_encodec_freeu import FlowMatch
-from encodec_feature_extractor import EncodecFeatures
+from periodwave.inference_utils.encodec_feature_extractor import EncodecFeatures
 
 h = None
 device = None
