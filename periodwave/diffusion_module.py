@@ -1,10 +1,12 @@
 import math
 import torch
-from model.base import BaseModule
+from periodwave.base import BaseModule
+
 
 class Mish(BaseModule):
     def forward(self, x):
         return x * torch.tanh(torch.nn.functional.softplus(x))
+
 
 class SinusoidalPosEmb(BaseModule):
     def __init__(self, dim):
