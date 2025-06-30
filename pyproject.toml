@@ -24,6 +24,6 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-where    = ["."]
-include  = ["*"]
-exclude  = ["tests*", "examples*"]
+where   = ["."]
+include = ["*"]
+exclude = ["tests*", "examples*"]
