@@ -29,6 +29,8 @@ exclude = ["tests*", "examples*"]
 
 [tool.setuptools]
 py-modules = [
+  "periodwave",
+  "model",
   "encodec_feature_extractor",
   "extract_energy",
   "meldataset_prior_length",
