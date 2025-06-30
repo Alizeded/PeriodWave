@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "periodwave"
+version = "0.0.1"
+description = "PeriodWave neural vocoder (packaged for pip/uv install)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+authors = [{ name = "sh-lee-prml & Lijun Wang" }]
+
+dependencies = [
+  "torch>=2.0",
+  "numpy",
+  "scipy",
+  "librosa>=0.10",
+  "soundfile",
+  "tqdm",
+  "torchaudio",
+  "einops",
+  "huggingface_hub>=0.23.4",
+]
+
+[tool.setuptools.packages.find]
+where    = ["."]
+include  = ["*"]
+exclude  = ["tests*", "examples*"]
