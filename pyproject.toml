@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "periodwave"
 version = "0.0.1"
 description = "PeriodWave neural vocoder"
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.11,<3.13"
 license = "Apache-2.0"
 authors = [{ name = "sh-lee-prml" }]
 
